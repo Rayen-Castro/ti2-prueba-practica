@@ -1,0 +1,23 @@
+{
+  "name": "security",
+  "version": "1.0.0",
+  "scripts": {
+    "test": "vitest run"
+  },
+  "keywords": [],
+  "type": "module",
+  "dependencies": {
+    "better-auth": "^1.7.2",
+    "better-sqlite3": "^12.11.1",
+    "typescript": "^7.0.2"
+  },
+  "allowScripts": {
+    "better-sqlite3@12.11.1": true,
+    "esbuild@0.28.2": true
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^9.6.0",
+    "tsx": "^4.23.12",
+    "vitest": "^4.1.11"
+  }
+}
