@@ -20,7 +20,7 @@ export type TipoSolapamiento =
  * Las comparaciones son estrictas porque los intervalos son semiabiertos
  * [inicio, fin): si uno termina justo cuando el otro empieza, no hay conflicto.
  */
-export function hayOverlap(a: Intervalo, b: Intervalo): boolean {
+export function haySolapamiento(a: Intervalo, b: Intervalo): boolean {
   return (
     a.inicioEnMinutos < b.finEnMinutos && b.inicioEnMinutos < a.finEnMinutos
   );
@@ -40,7 +40,7 @@ export function clasificarSolapamiento(
   nuevo: Intervalo,
   existente: Intervalo,
 ): TipoSolapamiento {
-  if (!hayOverlap(nuevo, existente)) {
+  if (!haySolapamiento(nuevo, existente)) {
     return "SIN_SOLAPAMIENTO";
   }
 

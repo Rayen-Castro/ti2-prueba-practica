@@ -5,6 +5,9 @@
   "description": "Actividad 4 - Logica de negocio pura para validar la disponibilidad de un horario",
   "type": "module",
   "main": "src/index.ts",
+  "engines": {
+    "node": ">=22.18.0"
+  },
   "scripts": {
     "test": "node --test",
     "test:watch": "node --test --watch",

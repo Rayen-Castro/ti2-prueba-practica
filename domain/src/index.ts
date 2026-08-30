@@ -20,5 +20,5 @@ export type {
   ResultadoIntervalo,
 } from "./domain/Intervalo.ts";
 
-export { clasificarSolapamiento, hayOverlap } from "./domain/solapamiento.ts";
+export { clasificarSolapamiento, haySolapamiento } from "./domain/solapamiento.ts";
 export type { TipoSolapamiento } from "./domain/solapamiento.ts";

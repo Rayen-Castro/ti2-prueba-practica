@@ -4,7 +4,7 @@ import { describe, it } from "node:test";
 import type { Intervalo } from "../../src/domain/Intervalo.ts";
 import {
   clasificarSolapamiento,
-  hayOverlap,
+  haySolapamiento,
 } from "../../src/domain/solapamiento.ts";
 
 const MINUTOS_POR_HORA = 60;
@@ -19,24 +19,24 @@ const rango = (horaInicio: number, horaFin: number): Intervalo => ({
   finEnMinutos: horaFin * MINUTOS_POR_HORA,
 });
 
-describe("hayOverlap", () => {
+describe("haySolapamiento", () => {
   it("detecta que dos intervalos comparten minutos", () => {
-    assert.equal(hayOverlap(rango(9, 10), rango(9.5, 10.5)), true);
+    assert.equal(haySolapamiento(rango(9, 10), rango(9.5, 10.5)), true);
   });
 
   it("no considera choque a dos intervalos separados", () => {
-    assert.equal(hayOverlap(rango(9, 10), rango(11, 12)), false);
+    assert.equal(haySolapamiento(rango(9, 10), rango(11, 12)), false);
   });
 
   it("no considera choque a dos intervalos que solo se tocan por el borde", () => {
-    assert.equal(hayOverlap(rango(9, 10), rango(10, 11)), false);
-    assert.equal(hayOverlap(rango(10, 11), rango(9, 10)), false);
+    assert.equal(haySolapamiento(rango(9, 10), rango(10, 11)), false);
+    assert.equal(haySolapamiento(rango(10, 11), rango(9, 10)), false);
   });
 
   it("es simetrico", () => {
     assert.equal(
-      hayOverlap(rango(9, 11), rango(10, 12)),
-      hayOverlap(rango(10, 12), rango(9, 11)),
+      haySolapamiento(rango(9, 11), rango(10, 12)),
+      haySolapamiento(rango(10, 12), rango(9, 11)),
     );
   });
 });
