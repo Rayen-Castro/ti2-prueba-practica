@@ -1,0 +1,23 @@
+{
+  "name": "ti2-domain-validador-disponibilidad",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Actividad 4 - Logica de negocio pura para validar la disponibilidad de un horario",
+  "type": "module",
+  "main": "src/index.ts",
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "dominio",
+    "reservas",
+    "typescript"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^7.0.2",
+    "vitest": "^4.1.11"
+  }
+}

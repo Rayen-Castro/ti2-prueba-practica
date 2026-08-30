@@ -61,11 +61,12 @@ npm install
 
 ## Cómo ejecutar
 
-Este paquete no tiene una interfaz de ejecución (es lógica pura). Se puede
-compilar para verificar tipos con:
+Este paquete no tiene interfaz de ejecución: es lógica de negocio pura, pensada
+para ser consumida por otra capa o verificada mediante sus pruebas. Para
+comprobar que todo el código compila y respeta los tipos:
 
 ```bash
-npm run build
+npm run typecheck
 ```
 
 ## Cómo ejecutar las pruebas
