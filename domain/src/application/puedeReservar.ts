@@ -9,11 +9,11 @@ import {
   crearIntervalo,
   type MotivoIntervaloInvalido,
   type Reserva,
-} from "../domain/Intervalo";
+} from "../domain/Intervalo.ts";
 import {
   clasificarSolapamiento,
   type TipoSolapamiento,
-} from "../domain/solapamiento";
+} from "../domain/solapamiento.ts";
 
 /** Tipos de choque reales, excluyendo el caso en que no hay conflicto. */
 export type Conflicto = Exclude<TipoSolapamiento, "SIN_SOLAPAMIENTO">;

@@ -1,7 +1,8 @@
-import { describe, expect, it } from "vitest";
+import assert from "node:assert/strict";
+import { describe, it } from "node:test";
 
-import type { Reserva } from "../../src/domain/Intervalo";
-import { puedeReservar, validarReserva } from "../../src/index";
+import type { Reserva } from "../../src/domain/Intervalo.ts";
+import { puedeReservar, validarReserva } from "../../src/index.ts";
 
 /** Agenda de ejemplo del enunciado. */
 const reservas: readonly Reserva[] = [
@@ -11,67 +12,51 @@ const reservas: readonly Reserva[] = [
 
 describe("puedeReservar", () => {
   it("resuelve el ejemplo del enunciado como no reservable", () => {
-    expect(puedeReservar(reservas, { inicio: "09:30", fin: "10:30" })).toBe(
-      false,
-    );
+    assert.equal(puedeReservar(reservas, { inicio: "09:30", fin: "10:30" }), false);
   });
 
   it("permite un horario disponible entre dos reservas", () => {
-    expect(puedeReservar(reservas, { inicio: "10:00", fin: "11:00" })).toBe(
-      true,
-    );
+    assert.equal(puedeReservar(reservas, { inicio: "10:00", fin: "11:00" }), true);
   });
 
   it("permite cualquier horario valido cuando la agenda esta vacia", () => {
-    expect(puedeReservar([], { inicio: "08:00", fin: "09:00" })).toBe(true);
+    assert.equal(puedeReservar([], { inicio: "08:00", fin: "09:00" }), true);
   });
 
   it("permite un horario que empieza justo cuando termina otra reserva", () => {
-    expect(puedeReservar(reservas, { inicio: "12:00", fin: "13:00" })).toBe(
-      true,
-    );
+    assert.equal(puedeReservar(reservas, { inicio: "12:00", fin: "13:00" }), true);
   });
 
   it("rechaza un solapamiento parcial", () => {
-    expect(puedeReservar(reservas, { inicio: "08:30", fin: "09:30" })).toBe(
-      false,
-    );
+    assert.equal(puedeReservar(reservas, { inicio: "08:30", fin: "09:30" }), false);
   });
 
   it("rechaza un horario que cubre por completo a una reserva", () => {
-    expect(puedeReservar(reservas, { inicio: "08:00", fin: "13:00" })).toBe(
-      false,
-    );
+    assert.equal(puedeReservar(reservas, { inicio: "08:00", fin: "13:00" }), false);
   });
 
   it("rechaza un horario contenido dentro de una reserva", () => {
-    expect(puedeReservar(reservas, { inicio: "09:15", fin: "09:45" })).toBe(
-      false,
-    );
+    assert.equal(puedeReservar(reservas, { inicio: "09:15", fin: "09:45" }), false);
   });
 
   it("rechaza un intervalo invalido", () => {
-    expect(puedeReservar(reservas, { inicio: "15:00", fin: "14:00" })).toBe(
-      false,
-    );
+    assert.equal(puedeReservar(reservas, { inicio: "15:00", fin: "14:00" }), false);
   });
 
   it("rechaza un intervalo con inicio y termino iguales", () => {
-    expect(puedeReservar(reservas, { inicio: "14:00", fin: "14:00" })).toBe(
-      false,
-    );
+    assert.equal(puedeReservar(reservas, { inicio: "14:00", fin: "14:00" }), false);
   });
 });
 
 describe("validarReserva", () => {
   it("informa que no hay impedimento cuando el horario esta disponible", () => {
-    expect(validarReserva(reservas, { inicio: "14:00", fin: "15:00" })).toEqual({
+    assert.deepEqual(validarReserva(reservas, { inicio: "14:00", fin: "15:00" }), {
       permitido: true,
     });
   });
 
   it("identifica el solapamiento parcial y la reserva en conflicto", () => {
-    expect(validarReserva(reservas, { inicio: "09:30", fin: "10:30" })).toEqual({
+    assert.deepEqual(validarReserva(reservas, { inicio: "09:30", fin: "10:30" }), {
       permitido: false,
       rechazo: {
         tipo: "SOLAPAMIENTO",
@@ -82,7 +67,7 @@ describe("validarReserva", () => {
   });
 
   it("identifica un horario contenido dentro de otro", () => {
-    expect(validarReserva(reservas, { inicio: "11:15", fin: "11:45" })).toEqual({
+    assert.deepEqual(validarReserva(reservas, { inicio: "11:15", fin: "11:45" }), {
       permitido: false,
       rechazo: {
         tipo: "SOLAPAMIENTO",
@@ -93,7 +78,7 @@ describe("validarReserva", () => {
   });
 
   it("identifica un solapamiento completo", () => {
-    expect(validarReserva(reservas, { inicio: "08:00", fin: "10:30" })).toEqual({
+    assert.deepEqual(validarReserva(reservas, { inicio: "08:00", fin: "10:30" }), {
       permitido: false,
       rechazo: {
         tipo: "SOLAPAMIENTO",
@@ -104,7 +89,7 @@ describe("validarReserva", () => {
   });
 
   it("trata una reserva identica a una existente como solapamiento completo", () => {
-    expect(validarReserva(reservas, { inicio: "09:00", fin: "10:00" })).toEqual({
+    assert.deepEqual(validarReserva(reservas, { inicio: "09:00", fin: "10:00" }), {
       permitido: false,
       rechazo: {
         tipo: "SOLAPAMIENTO",
@@ -115,21 +100,21 @@ describe("validarReserva", () => {
   });
 
   it("informa el motivo cuando el intervalo solicitado es invalido", () => {
-    expect(validarReserva(reservas, { inicio: "15:00", fin: "14:00" })).toEqual({
+    assert.deepEqual(validarReserva(reservas, { inicio: "15:00", fin: "14:00" }), {
       permitido: false,
       rechazo: { tipo: "SOLICITUD_INVALIDA", motivo: "INTERVALO_INVALIDO" },
     });
   });
 
   it("informa el motivo cuando el inicio y el termino son iguales", () => {
-    expect(validarReserva(reservas, { inicio: "14:00", fin: "14:00" })).toEqual({
+    assert.deepEqual(validarReserva(reservas, { inicio: "14:00", fin: "14:00" }), {
       permitido: false,
       rechazo: { tipo: "SOLICITUD_INVALIDA", motivo: "DURACION_CERO" },
     });
   });
 
   it("informa el motivo cuando el horario solicitado tiene formato invalido", () => {
-    expect(validarReserva(reservas, { inicio: "9:00", fin: "10:00" })).toEqual({
+    assert.deepEqual(validarReserva(reservas, { inicio: "9:00", fin: "10:00" }), {
       permitido: false,
       rechazo: { tipo: "SOLICITUD_INVALIDA", motivo: "FORMATO_INVALIDO" },
     });
@@ -138,26 +123,28 @@ describe("validarReserva", () => {
   it("rechaza la solicitud si la agenda contiene un horario ilegible", () => {
     const agendaCorrupta: readonly Reserva[] = [{ inicio: "99:99", fin: "10:00" }];
 
-    expect(
+    assert.deepEqual(
       validarReserva(agendaCorrupta, { inicio: "14:00", fin: "15:00" }),
-    ).toEqual({
-      permitido: false,
-      rechazo: {
-        tipo: "AGENDA_INVALIDA",
-        motivo: "FORMATO_INVALIDO",
-        reserva: { inicio: "99:99", fin: "10:00" },
+      {
+        permitido: false,
+        rechazo: {
+          tipo: "AGENDA_INVALIDA",
+          motivo: "FORMATO_INVALIDO",
+          reserva: { inicio: "99:99", fin: "10:00" },
+        },
       },
-    });
+    );
   });
 
   it("valida la solicitud antes que la agenda", () => {
     const agendaCorrupta: readonly Reserva[] = [{ inicio: "99:99", fin: "10:00" }];
 
-    expect(
+    assert.deepEqual(
       validarReserva(agendaCorrupta, { inicio: "15:00", fin: "14:00" }),
-    ).toEqual({
-      permitido: false,
-      rechazo: { tipo: "SOLICITUD_INVALIDA", motivo: "INTERVALO_INVALIDO" },
-    });
+      {
+        permitido: false,
+        rechazo: { tipo: "SOLICITUD_INVALIDA", motivo: "INTERVALO_INVALIDO" },
+      },
+    );
   });
 });

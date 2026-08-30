@@ -5,20 +5,20 @@
  * deberia importar siempre desde aqui y nunca desde una ruta interna.
  */
 
-export { puedeReservar, validarReserva } from "./application/puedeReservar";
+export { puedeReservar, validarReserva } from "./application/puedeReservar.ts";
 export type {
   Conflicto,
   MotivoRechazo,
   ResultadoValidacion,
-} from "./application/puedeReservar";
+} from "./application/puedeReservar.ts";
 
-export { crearIntervalo, parsearHora } from "./domain/Intervalo";
+export { crearIntervalo, parsearHora } from "./domain/Intervalo.ts";
 export type {
   Intervalo,
   MotivoIntervaloInvalido,
   Reserva,
   ResultadoIntervalo,
-} from "./domain/Intervalo";
+} from "./domain/Intervalo.ts";
 
-export { clasificarSolapamiento, hayOverlap } from "./domain/solapamiento";
-export type { TipoSolapamiento } from "./domain/solapamiento";
+export { clasificarSolapamiento, hayOverlap } from "./domain/solapamiento.ts";
+export type { TipoSolapamiento } from "./domain/solapamiento.ts";

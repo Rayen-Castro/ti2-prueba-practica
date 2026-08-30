@@ -5,7 +5,7 @@
  * consume. Solo responde por la relacion entre dos rangos horarios.
  */
 
-import type { Intervalo } from "./Intervalo";
+import type { Intervalo } from "./Intervalo.ts";
 
 /** Relacion entre un intervalo nuevo y uno ya existente. */
 export type TipoSolapamiento =
